@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>展厅编辑 - 虚拟博物馆展厅平台</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/editor.css">
+</head>
+<body>
+  <!-- 顶部工具栏 -->
+  <header class="editor-header">
+    <div class="header-left">
+      <button class="btn-text" id="btnBack">返回</button>
+    </div>
+    <div class="header-center">
+      <h1>展厅编辑</h1>
+    </div>
+    <div class="header-right">
+      <button class="btn-text" id="btnSave">保存</button>
+      <button class="btn-text" id="btnPreview">预览</button>
+      <button class="btn-text btn-primary-text" id="btnShare">分享</button>
+    </div>
+  </header>
+
+  <!-- 主编辑区 -->
+  <div class="editor-container">
+    <!-- 左侧展品面板 -->
+    <aside class="left-panel">
+      <div class="panel-header">
+        <h2>展品</h2>
+        <button class="btn btn-primary btn-sm" id="btnUpload">上传展品</button>
+      </div>
+      <div class="exhibit-list" id="exhibitList">
+        <div class="empty-state">
+          <p>暂无展品</p>
+          <p class="hint">点击"上传展品"添加</p>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-secondary btn-block" id="btnAILayout">AI 布局</button>
+      </div>
+    </aside>
+
+    <!-- 中央 3D 场景 -->
+    <main class="scene-container">
+      <div id="scene3d"></div>
+      <div class="scene-hint" id="sceneHint">
+        <p>拖拽旋转视角 · 滚轮缩放 · 右键平移</p>
+      </div>
+    </main>
+
+    <!-- 右侧属性面板 -->
+    <aside class="right-panel" id="rightPanel" style="display: none;">
+      <div class="panel-header">
+        <h2>属性</h2>
+        <button class="btn-icon" id="btnClosePanel">×</button>
+      </div>
+      <div class="panel-content">
+        <div class="form-group">
+          <label>名称</label>
+          <input type="text" id="exhibitName" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>描述</label>
+          <textarea id="exhibitDesc" class="form-input" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>位置 X</label>
+          <input type="number" id="exhibitPosX" class="form-input" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>位置 Y</label>
+          <input type="number" id="exhibitPosY" class="form-input" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>位置 Z</label>
+          <input type="number" id="exhibitPosZ" class="form-input" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>旋转 Y</label>
+          <input type="number" id="exhibitRotY" class="form-input" step="1">
+        </div>
+        <div class="form-group">
+          <label>缩放 <span class="range-value" id="exhibitScaleVal">1.0</span></label>
+          <input type="range" id="exhibitScale" class="form-range" min="0.5" max="3" step="0.1" value="1">
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-danger btn-block" id="btnDelete">删除展品</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 上传弹窗 -->
+  <div class="modal" id="uploadModal" style="display: none;">
+    <div class="modal-backdrop" id="uploadBackdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>上传展品</h2>
+        <button class="btn-icon" id="btnCloseModal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="upload-area" id="uploadArea">
+          <p class="upload-hint">拖拽图片到此处，或点击选择文件</p>
+          <p class="upload-format">支持 JPG/PNG 格式，最大 5MB</p>
+          <input type="file" id="fileInput" accept="image/jpeg,image/png" style="display: none;">
+        </div>
+        <div class="upload-preview" id="uploadPreview" style="display: none;">
+          <img id="previewImage" src="" alt="预览">
+        </div>
+        <div class="form-group">
+          <label>展品名称</label>
+          <input type="text" id="uploadName" class="form-input" placeholder="输入展品名称">
+        </div>
+        <div class="form-group">
+          <label>展品描述</label>
+          <textarea id="uploadDesc" class="form-input" rows="3" placeholder="输入展品描述"></textarea>
+        </div>
+        <div class="form-group">
+          <label>展品类型</label>
+          <select id="uploadType" class="form-input">
+            <option value="wall">墙面挂画</option>
+            <option value="pedestal">展台陈列</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelUpload">取消</button>
+        <button class="btn btn-primary" id="btnConfirmUpload">确认添加</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 分享弹窗 -->
+  <div class="modal" id="shareModal" style="display: none;">
+    <div class="modal-backdrop" id="shareBackdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>分享展厅</h2>
+        <button class="btn-icon" id="btnCloseShare">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="share-hint">复制以下链接分享给他人：</p>
+        <div class="share-link-box">
+          <input type="text" id="shareLink" class="form-input" readonly>
+          <button class="btn btn-secondary btn-sm" id="btnCopyLink">复制</button>
+        </div>
+        <p class="share-note">注意：链接包含展厅数据，长度可能较长</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
+  
+  <!-- 应用脚本 -->
+  <script src="js/utils/Storage.js"></script>
+  <script src="js/utils/URLCodec.js"></script>
+  <script src="js/scene/Scene.js"></script>
+  <script src="js/scene/Template.js"></script>
+  <script src="js/scene/Exhibit.js"></script>
+  <script src="js/scene/AILayout.js"></script>
+  <script src="js/editor.js"></script>
+</body>
+</html>

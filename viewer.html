@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>展厅漫游 - 虚拟博物馆展厅平台</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/viewer.css">
+</head>
+<body>
+  <!-- 加载中遮罩 -->
+  <div class="loading-mask" id="loadingMask">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p>正在加载展厅...</p>
+    </div>
+  </div>
+
+  <!-- 3D 场景容器 -->
+  <div id="scene3d"></div>
+
+  <!-- 控制提示 -->
+  <div class="controls-hint" id="controlsHint">
+    <div class="hint-content">
+      <h3>🏛️ 漫游控制</h3>
+      <div class="hint-grid">
+        <div class="hint-item">
+          <span class="key">W</span>
+          <span class="key">A</span>
+          <span class="key">S</span>
+          <span class="key">D</span>
+          <span>移动</span>
+        </div>
+        <div class="hint-item">
+          <span class="key">↑</span>
+          <span class="key">↓</span>
+          <span class="key">←</span>
+          <span class="key">→</span>
+          <span>方向键移动</span>
+        </div>
+        <div class="hint-item">
+          <span class="key">鼠标拖拽</span>
+          <span>旋转视角</span>
+        </div>
+        <div class="hint-item">
+          <span class="key">ESC</span>
+          <span>显示/隐藏鼠标</span>
+        </div>
+      </div>
+      <p class="hint-tips">走近展品可查看详细信息</p>
+      <button class="btn-text" id="btnHideHint">开始漫游 →</button>
+    </div>
+  </div>
+
+  <!-- 展品信息卡片 -->
+  <div class="exhibit-card" id="exhibitCard" style="display: none;">
+    <div class="exhibit-card-image" id="cardImage"></div>
+    <div class="exhibit-card-content">
+      <h3 id="cardName">展品名称</h3>
+      <p id="cardDesc">展品描述</p>
+    </div>
+  </div>
+
+  <!-- 顶部工具栏 -->
+  <header class="viewer-header" id="viewerHeader">
+    <button class="btn-text" id="btnBack">← 返回</button>
+    <h1>🏛️ 展厅漫游</h1>
+    <div class="header-spacer"></div>
+  </header>
+
+  <!-- 准星（漫游模式） -->
+  <div class="crosshair" id="crosshair" style="display:none;">+</div>
+
+  <!-- Three.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
+  
+  <!-- 应用脚本 -->
+  <script src="js/utils/Storage.js"></script>
+  <script src="js/utils/URLCodec.js"></script>
+  <script src="js/scene/Exhibit.js"></script>
+  <script src="js/scene/Template.js"></script>
+  <script src="js/viewer.js"></script>
+</body>
+</html>

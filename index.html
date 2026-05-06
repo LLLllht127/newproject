@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>虚拟博物馆展厅平台</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <!-- 背景粒子效果 -->
+  <div class="bg-particles" id="bgParticles"></div>
+
+  <div class="container">
+    <header class="header">
+      <div class="header-badge">🏛️ 3D 虚拟展厅</div>
+      <h1>虚拟博物馆展厅平台</h1>
+      <p class="subtitle">无需编程，创建您的沉浸式 3D 虚拟展厅，一键生成分享链接</p>
+      <div class="header-features">
+        <span class="feature-tag">✦ 3 种专业模板</span>
+        <span class="feature-tag">✦ AI 智能布局</span>
+        <span class="feature-tag">✦ 第一人称漫游</span>
+        <span class="feature-tag">✦ URL 一键分享</span>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="templates-section">
+        <h2>选择展厅模板</h2>
+        <p class="section-subtitle">三种风格任你选择，点击即可开始创作</p>
+        <div class="templates-grid">
+          <!-- 古典博物馆 -->
+          <div class="template-card" data-template="classical">
+            <div class="template-preview template-classical">
+              <div class="preview-scene preview-classical-scene">
+                <div class="preview-wall"></div>
+                <div class="preview-frame f1"></div>
+                <div class="preview-frame f2"></div>
+                <div class="preview-pedestal p1"></div>
+              </div>
+              <div class="preview-overlay">
+                <span class="preview-label">古典博物馆</span>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>🏛️ 古典博物馆</h3>
+              <p>暖色调墙面、木质展台、柔和聚光灯，彰显历史厚重感</p>
+              <div class="template-tags">
+                <span class="tag">暖色调</span>
+                <span class="tag">木质展台</span>
+                <span class="tag">聚光灯</span>
+              </div>
+            </div>
+            <button class="btn btn-primary select-template">创建展厅</button>
+          </div>
+
+          <!-- 现代美术馆 -->
+          <div class="template-card featured" data-template="modern">
+            <div class="card-badge">推荐</div>
+            <div class="template-preview template-modern">
+              <div class="preview-scene preview-modern-scene">
+                <div class="preview-wall"></div>
+                <div class="preview-frame f1"></div>
+                <div class="preview-frame f2"></div>
+                <div class="preview-frame f3"></div>
+                <div class="preview-spotlight sl1"></div>
+                <div class="preview-spotlight sl2"></div>
+              </div>
+              <div class="preview-overlay">
+                <span class="preview-label">现代美术馆</span>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>🎨 现代美术馆</h3>
+              <p>白色简洁墙面、轨道射灯、现代展台，突出作品本身</p>
+              <div class="template-tags">
+                <span class="tag">纯白墙面</span>
+                <span class="tag">轨道射灯</span>
+                <span class="tag">简约风格</span>
+              </div>
+            </div>
+            <button class="btn btn-primary select-template">创建展厅</button>
+          </div>
+
+          <!-- 历史考古 -->
+          <div class="template-card" data-template="archaeological">
+            <div class="template-preview template-archaeological">
+              <div class="preview-scene preview-arch-scene">
+                <div class="preview-wall"></div>
+                <div class="preview-glass g1"></div>
+                <div class="preview-glass g2"></div>
+                <div class="preview-glass g3"></div>
+                <div class="preview-light-beam lb1"></div>
+                <div class="preview-light-beam lb2"></div>
+              </div>
+              <div class="preview-overlay">
+                <span class="preview-label">历史考古</span>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>🏺 历史考古</h3>
+              <p>深色沉稳墙面、玻璃展柜、重点照明，还原考古现场</p>
+              <div class="template-tags">
+                <span class="tag">深色墙面</span>
+                <span class="tag">玻璃展柜</span>
+                <span class="tag">重点照明</span>
+              </div>
+            </div>
+            <button class="btn btn-primary select-template">创建展厅</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 草稿区域 -->
+      <section class="draft-section" id="draftSection" style="display: none;">
+        <div class="draft-icon">📋</div>
+        <h2>继续编辑</h2>
+        <div class="draft-card">
+          <p>您有一个未完成的展厅草稿</p>
+          <p class="draft-info" id="draftInfo"></p>
+          <div class="draft-actions">
+            <button class="btn btn-secondary" id="continueDraft">继续编辑</button>
+            <button class="btn btn-ghost" id="discardDraft">丢弃草稿</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 使用说明 -->
+      <section class="howto-section">
+        <h2>如何使用</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon">🖼️</div>
+            <h3>选择模板</h3>
+            <p>从三种专业展厅模板中选择最适合您作品风格的布置</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon">📤</div>
+            <h3>上传展品</h3>
+            <p>上传 JPG/PNG 图片，为每件展品填写名称和描述信息</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon">🤖</div>
+            <h3>AI 布局</h3>
+            <p>一键 AI 智能布局，或手动拖拽调整每件展品的位置</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">04</div>
+            <div class="step-icon">🔗</div>
+            <h3>分享漫游</h3>
+            <p>生成专属链接，任何人打开即可第一人称沉浸式漫游</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>纯前端实现 · Three.js 驱动 · 数据存储在本地浏览器</p>
+    </footer>
+  </div>
+
+  <script src="js/utils/Storage.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // 丢弃草稿按钮
+    const discardBtn = document.getElementById('discardDraft');
+    if (discardBtn) {
+      discardBtn.addEventListener('click', () => {
+        if (confirm('确定要丢弃草稿吗？')) {
+          Storage.clearDraft();
+          document.getElementById('draftSection').style.display = 'none';
+        }
+      });
+    }
+
+    // 背景粒子
+    (function() {
+      const container = document.getElementById('bgParticles');
+      if (!container) return;
+      for (let i = 0; i < 30; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'particle';
+        dot.style.cssText = `
+          left: ${Math.random() * 100}%;
+          top: ${Math.random() * 100}%;
+          width: ${Math.random() * 4 + 2}px;
+          height: ${Math.random() * 4 + 2}px;
+          animation-delay: ${Math.random() * 6}s;
+          animation-duration: ${Math.random() * 4 + 4}s;
+        `;
+        container.appendChild(dot);
+      }
+    })();
+  </script>
+</body>
+</html>
